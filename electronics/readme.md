@@ -50,7 +50,8 @@ For the plug, cut about 15-20cm off the end of a UIS cable. Strip maybe 1-2cm of
 
 For the socket, you need four 50mm lengths of multi-strand wire. Strip one end to a couple of millimeters, insert into the holes on the socket and solder into place. Again, strip the other end to maybe 5mm, but don't tin them.
 
-USB socket wiring:
+USB socket wiring - note the colours here are the old 3.0 colours!
+
 [<img src="2-usb-socket-wiring.jpg" width="300" height="auto">](2-usb-socket-wiring.jpg)
 
 ### Making the PCB
