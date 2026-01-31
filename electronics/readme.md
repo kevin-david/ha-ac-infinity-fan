@@ -4,8 +4,7 @@ The electronics for the HA AC Infinity project require a few components:
 
 - An ESP32-32S WROOM board (eg. https://www.amazon.co.uk/dp/B0DQ51N5B1)
 - A USB-C socket (eg. https://www.amazon.co.uk/dp/B0D59Y34ZF)
-- A USB-C plug (eg. https://www.amazon.co.uk/dp/B09V273Z8Z)
-- Some 4-core wire (eg. https://www.amazon.co.uk/dp/B0C14L4W14)
+- A male-to-male UIS cable (eg. https://www.amazon.co.uk/dp/B0BRNVBJRN)
 - Two 3D printed parts to make the box (although other boxes are also possible)
 - Four M3 x 5mm and 4 M3 x 12mm screws to hold it together
 - Some short lengths of general purpose multi-strand hookup wire (ideally in a few different colours)
@@ -16,28 +15,43 @@ I also had PCBs made, which is optional but recommended (you get a lot of electr
 
 ## Making the Electronics
 
+### Noise and Malfunctions
+
+When I first made this project, everything worked fine on the desk. However, when I put it into service a persistent problem occurred. The problem looks like it's possibly electrical noise on the PWM signal line, although no amount of decoupling and shielding seems to stop it. I tracked the problem down to the male USB plug and wire to the board. The DIY USB connectors I was using appear to be the problem, although I also tried pre-made moulded USB 'pig tails' and they also didn't work (I actually made up 4 of these circuit boards and USB connectors using the DIY connectors - one of them works flawlessly, the others all exhibit the problem). **The only solution I have found that works reliably is to cut up an AC Infinity UIS cable**. Whilst a comparitively expensive option, it does mean you get a nicely moulded USB connector (I also tried using the UIS cable with a DIY USB plug, that also didn't work). If anyone finds a better, reliable, solution, I'd love to hear about it!
+
+The problem manifests itself as the fan resetting itself every few seconds. That is, when the controller requests (say) speed 5, the fan speeds up, but then resets (making a slight clicking noise), slows down and then speeds up again. The controller doesn't show anything, but the mobile app shows the actual speed fluctuating. I looked at the PWM signal on an oscilloscope, I can't really see any problem with it, but during a reset it stops "pwming" for a moment, which is when the fan resets. It's unclear why the controller does this, or how it's aware of a problem as the whole system works without the Tach signal, so there's no "input" to the controller.
+
 ### USB Connectors
 
 AC Infinity misuse USB connectors for their proprietary connections. Their system is absolutely not compatible with any genuine USB devices, and will likely catastrophically damage them if you are foolish enough to connect them to it.
 
-For the project, we need a lead with a plug on the end of it and a socket. The plug likely can't fit any plastic covers on it, and the lead should be long enough to allow you to put the box of electronics somewhere near to the fan's controller. In my case they're all hidden away, so I've used a short cable. Longer cables are likely possible because the signals used aren't particularly complex.
+Contrary to just about all the information elsewhere in the Internet, the AC Infinity UIS protocol is a **5** pin protocol (I got desperate and cut up an official cable!). The pin out is:
 
-| Socket & Plug | AC Infinity | Colour Coding |
-| ------------- | ----------- | ------------- |
-| V             | +10V        | Red           |
-| D+            | Tach Signal | Yellow        |
-| D-            | PWM         | White         |
-| G             | Ground      | Black         |
+| Wire Colour | USB Pin   | Purpose     |
+| ----------- | --------- | ----------- |
+| Red         | VBUS      | +10V power  |
+| Yellow      | D+        | Tach Signal |
+| White       | D-        | PWM         |
+| Black       | GND       | Ground      |
+| Green       | CC1 & CC2 | ???         |
 
-Note the labelling on the plug and socket is really small - be careful where you're soldering!
+The CC1/CC2 (green) connection doesn't appear to be necessary to make this project work. I'd connect it if you have connectors that have it, otherwise don't worry about it too much. It's likely only used in more complex setups, which aren't supported by this project.
 
-For the plug, cut about 30cm of the four core cable. Remove about 15mm of sleeve from one end to expose the individual wires. Then strip all four wires to a couple of millimeters (I found it easier to strip to about 5mm and trim them after tinning). Tin the ends, and tin all four pads on the plug. Then you can connect the wires to the pads relatively easily. At the other end of the cable, remove maybe 15-20mm of sleeve and then strip the wires to about 5mm (don't tin them though).
+Since I'm now using cut-up UIS cables as part of the project, in board revision 3.1 I've changed the colour scheme on the board to match the UIS colours:
+
+| Socket | AC Infinity | Colour Coding |
+| ------ | ----------- | ------------- |
+| V      | +10V        | Red           |
+| D+     | Tach Signal | Yellow        |
+| D-     | PWM         | White         |
+| G      | Ground      | Black         |
+
+For the plug, cut about 15-20cm off the end of a UIS cable. Strip maybe 1-2cm of the outer insulation and then strip a couple of millimetres off each of the four signal wires inside. You don't need to do anything with the green wire.
 
 For the socket, you need four 50mm lengths of multi-strand wire. Strip one end to a couple of millimeters, insert into the holes on the socket and solder into place. Again, strip the other end to maybe 5mm, but don't tin them.
 
-| USB Plug Wiring                                                                      | USB Socket Wiring                                                                        |
-| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| [<img src="1-usb-plug-wiring.jpg" width="300" height="auto">](1-usb-plug-wiring.jpg) | [<img src="2-usb-socket-wiring.jpg" width="300" height="auto">](2-usb-socket-wiring.jpg) |
+USB socket wiring:
+[<img src="2-usb-socket-wiring.jpg" width="300" height="auto">](2-usb-socket-wiring.jpg)
 
 ### Making the PCB
 
@@ -62,7 +76,7 @@ The left hand JP1 connector is used to connect the USB plug, on the 4 core cable
 | White  | Yellow |
 | Black  | Red    |
 
-Once assesmbled it should look like this:
+Once assembled it should look like this:
 
 [<img src="6-fully-assembled.jpg" width="300" height="auto">](6-fully-assembled.jpg)
 
