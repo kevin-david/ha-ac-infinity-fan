@@ -68,7 +68,11 @@ See the [Bill Of Materials](https://html-preview.github.io/?url=https://github.c
 
 ### Connecting the USB Connectors
 
-The left hand JP1 connector is used to connect the USB plug, on the 4 core cable. The right hand, JP2 connector is used to connect the USB socket, on four short multi-strand wires. Note the colour coding of the holes on the PCB, from the top of the board to the bottom:
+JP1 (left) connects to the controller. Use the cut up UIS cable's plug for this connection. If using a UIS v2 cable, the white (PWM) and yellow (tach) wires may be reversed — if the controller speed reads incorrectly, try swapping them on JP1. There's a low risk of damage if these two are incorrectly wired.
+
+JP2 (right) connects to the fan via a USB socket and a male-to-male UIS cable. Four short wires from the socket to the board is all that's needed. 
+
+Note the colour coding of the holes on the PCB, from the top of the board to the bottom:
 
 | JP1    | JP2    |
 | ------ | ------ |
