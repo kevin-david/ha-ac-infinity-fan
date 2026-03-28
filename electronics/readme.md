@@ -2,11 +2,11 @@
 
 The electronics for the HA AC Infinity project require a few components:
 
-- An ESP32-32S WROOM board (eg. https://www.amazon.co.uk/dp/B0DQ51N5B1)
+- An ESP32-32S WROOM board (eg. https://www.amazon.co.uk/dp/B0DQ51N5B1). Ensure it's the 38-pin version.
 - A USB-C socket (eg. https://www.amazon.co.uk/dp/B0D59Y34ZF)
 - A male-to-male UIS cable (eg. https://www.amazon.co.uk/dp/B0BRNVBJRN)
 - Two 3D printed parts to make the box (although other boxes are also possible)
-- Four M3 x 5mm and 4 M3 x 12mm screws to hold it together
+- Four M3 x 5mm and 4 M3 x 12mm self-tapping screws to hold it together
 - Some short lengths of general purpose multi-strand hookup wire (ideally in a few different colours)
 
 There is also a whole [Bill Of Materials](https://html-preview.github.io/?url=https://github.com/coofercat/ha-ac-infinity-fan/blob/main/electronics/ac-infinity-esphome_bom.html) (BOM) for the electronic circuit. The circuit uses mostly generic, easy to source through-hole components. It's relatively easy to solder together. The transistors I used are 2N3904, and I used a buck module (https://www.amazon.co.uk/dp/B081JMJZG6) instead of a regular 7805 voltage regulator (if you do use a 7805, you will also need a heatsink). The relay is a generic 5V coil, DPDT (I had some of these already). The BOM lists JP1 and JP2, but these are not needed - they're just holes for attaching wires.
